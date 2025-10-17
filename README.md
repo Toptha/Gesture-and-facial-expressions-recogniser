@@ -1,7 +1,5 @@
 # Real-Time Clash Royale Emote System using Face & Hand Gestures
 
-![Clash Royale Gesture System](https://placehold.co/800x400/2c2f33/a9b0ba?text=Gesture%20Emote%20System%20in%20Action)
-
 ## 1. Introduction
 
 This Python application brings the expressive fun of Clash Royale emotes into the real world, transforming your natural movements into instant, animated reactions. Using a standard webcam, the system performs a sophisticated real-time analysis of the user's head and hand gestures to trigger corresponding emotes from the game, creating a seamless and deeply interactive experience.
