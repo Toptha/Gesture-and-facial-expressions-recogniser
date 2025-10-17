@@ -1,21 +1,92 @@
-Real-Time Clash Royale Emote System using Face & Hand Gestures1. IntroductionThis Python application brings the expressive fun of Clash Royale emotes into the real world, transforming your natural movements into instant, animated reactions. Using a standard webcam, the system performs a sophisticated real-time analysis of the user's head and hand gestures to trigger corresponding emotes from the game, creating a seamless and deeply interactive experience.The project is founded on the idea that human-computer interaction should be intuitive and engaging. Instead of relying on complex or unnatural hand signs, this system uses simple, universal gestures like tilting your head up to laugh, bending your head down in anger, or bringing your hands to your eyes to cry, making the technology feel like an extension of the user.2. Core FeaturesDual AI Model Integration: Simultaneously runs two powerful MediaPipe models: FaceMesh for precise head-pose estimation and Hands for multi-hand tracking, allowing for a rich and reliable set of combined gestures.Intuitive & Natural Gestures: Moves away from complex finger-tracking in favor of simple, robust head tilts and hand-to-face interactions that are easy for anyone to perform.State Machine for Reliability: To prevent accidental triggers and flickering between emotes, a gesture must be held for several consecutive frames before it is "confirmed," ensuring every emote is intentional.Live Debug Overlay: An optional on-screen text display shows the real-time data the system is using (e.g., NoseTilt, EyeDist), helping users quickly learn how to perform each gesture correctly.Animated Emote Support: Natively handles .gif files, bringing the emotes to life with their original animations.Real-Time Performance: Optimized to run smoothly on standard hardware, providing an interactive experience without noticeable lag.3. Technology StackPython: The core programming language.OpenCV: For capturing and handling the webcam video feed and rendering the user interface.MediaPipe (by Google): For cutting-edge, real-time face and hand landmark detection.Pillow (PIL): For processing and handling animated GIF files.NumPy: For efficient numerical operations on image data.4. Installation and SetupPrerequisitesPython 3.8+A functional webcamStep-by-Step InstallationClone or Download the Project:Obtain the project files and place them in a dedicated folder.Create a Virtual Environment (Highly Recommended):# For macOS/Linux
-python3 -m venv venv
-source venv/bin/activate
+# Real-Time Clash Royale Emote System using Face & Hand Gestures
 
-# For Windows
-python -m venv venv
-.\venv\Scripts\activate
-Install Required Libraries:Install all dependencies using the following command:pip install opencv-python mediapipe numpy Pillow
-5. Project StructureEnsure your project directory is organized as follows for the application to find the emote files:project_folder/
-├── gesture_emote_system.py   # The main application script
-├── README.md                 # This file
-└── emotes/                   # Folder for emote GIFs
-    ├── angry_king.gif
-    ├── goblin_crying.gif
-    ├── king_laugh.gif
-    ├── mog.gif
-    ├── neutral.png
-    ├── princess_kiss.gif
-    └── thumbs_up.gif
-6. How to Run the ApplicationNavigate to the project directory in your terminal.Activate your virtual environment if you created one.Run the script:python gesture_emote_system.py
-A window will appear with your webcam feed. Start performing gestures!To quit the application, press the 'q' key.7. Gesture GuideLaughing King (Heheheha): Tilt your head upwards.Angry King: Bend your head downwards.Crying Goblin: Bring both of your hands up close to your eyes.Kissing Princess: Place your open palm fully over your mouth.Mog Emote: Place your index finger near your chin or jawline.Thumbs Up King: Make a clear thumbs-up gesture with a closed fist.8. How It Works: A Technical OverviewThe application's logic follows a continuous loop for each frame captured from the webcam:Frame Capture: OpenCV captures a frame, flips it horizontally (for a mirror effect), and converts it to RGB.Dual Model Inference: The RGB frame is passed to both the FaceMesh and Hands models simultaneously. MediaPipe processes the image and returns a detailed list of 3D landmarks for the detected face and hands.Gesture Recognition Engine: This is the core logic where the landmark data is analyzed:Head Tilt: It calculates the vertical distance between the nose and chin landmarks. A significant increase means a head tilt up (laugh), while a decrease means a head bend down (angry).Hand-to-Face Proximity: It calculates the Euclidean distance between hand landmarks (like the center of the palm or the tip of the index finger) and face landmarks (like the eyes, mouth, or chin) to detect gestures like "cry," "kiss," and "mog."Hand Pose Analysis: For the "thumbs up," it checks the vertical position of the thumb's tip relative to the other finger knuckles to confirm the pose.State Management: The detected gesture is not triggered immediately. It is stored as a candidate. Only after this candidate gesture has been detected for GESTURE_CONFIRMATION_FRAMES (e.g., 5 frames in a row) does it become the active gesture. This prevents momentary, unintentional movements from triggering emotes.UI Rendering: OpenCV is used to draw everything back onto the screen: the original webcam feed, the detected landmarks, the live debug text, and the currently active emote GIF, which is updated frame-by-frame.
+![Clash Royale Gesture System](https://placehold.co/800x400/2c2f33/a9b0ba?text=Gesture%20Emote%20System%20in%20Action)
+
+## 1. Introduction
+
+This Python application brings the expressive fun of Clash Royale emotes into the real world, transforming your natural movements into instant, animated reactions. Using a standard webcam, the system performs a sophisticated real-time analysis of the user's head and hand gestures to trigger corresponding emotes from the game, creating a seamless and deeply interactive experience.
+
+The project is founded on the idea that human-computer interaction should be intuitive and engaging. Instead of relying on complex or unnatural hand signs, this system uses simple, universal gestures like tilting your head up to laugh, bending your head down in anger, or bringing your hands to your eyes to cry, making the technology feel like an extension of the user.
+
+## 2. Core Features
+
+* **Dual AI Model Integration**: Simultaneously runs two powerful MediaPipe models: **FaceMesh** for precise head-pose estimation and **Hands** for multi-hand tracking, allowing for a rich and reliable set of combined gestures.
+* **Intuitive & Natural Gestures**: Moves away from complex finger-tracking in favor of simple, robust head tilts and hand-to-face interactions that are easy for anyone to perform.
+* **State Machine for Reliability**: To prevent accidental triggers and flickering between emotes, a gesture must be held for several consecutive frames before it is "confirmed," ensuring every emote is intentional.
+* **Live Debug Overlay**: An optional on-screen text display shows the real-time data the system is using (e.g., `NoseTilt`, `EyeDist`), helping users quickly learn how to perform each gesture correctly.
+* **Animated Emote Support**: Natively handles `.gif` files, bringing the emotes to life with their original animations.
+* **Real-Time Performance**: Optimized to run smoothly on standard hardware, providing an interactive experience without noticeable lag.
+
+## 3. Technology Stack
+
+* **Python**: The core programming language.
+* **OpenCV**: For capturing and handling the webcam video feed and rendering the user interface.
+* **MediaPipe (by Google)**: For cutting-edge, real-time face and hand landmark detection.
+* **Pillow (PIL)**: For processing and handling animated GIF files.
+* **NumPy**: For efficient numerical operations on image data.
+
+## 4. Installation and Setup
+
+### Prerequisites
+* Python 3.8+
+* A functional webcam
+
+### Step-by-Step Installation
+
+1.  **Clone or Download the Project:**
+    Obtain the project files and place them in a dedicated folder.
+
+2.  **Create a Virtual Environment (Highly Recommended):**
+    ```bash
+    # For macOS/Linux
+    python3 -m venv venv
+    source venv/bin/activate
+
+    # For Windows
+    python -m venv venv
+    .\venv\Scripts\activate
+    ```
+
+3.  **Install Required Libraries:**
+    Install all dependencies using the following command:
+    ```bash
+    pip install opencv-python mediapipe numpy Pillow
+    ```
+
+## 5. Project Structure
+
+Ensure your project directory is organized as follows for the application to find the emote files:
+
+project_folder/├── gesture_emote_system.py   # The main application script├── README.md                 # This file└── emotes/                   # Folder for emote GIFs├── angry_king.gif├── goblin_crying.gif├── king_laugh.gif├── mog.gif├── neutral.png├── princess_kiss.gif└── thumbs_up.gif
+## 6. How to Run the Application
+
+1.  Navigate to the project directory in your terminal.
+2.  Activate your virtual environment if you created one.
+3.  Run the script:
+    ```bash
+    python gesture_emote_system.py
+    ```
+4.  A window will appear with your webcam feed. Start performing gestures!
+5.  To quit the application, press the **'q'** key.
+
+## 7. Gesture Guide
+
+* **Laughing King (Heheheha)**: Tilt your head upwards.
+* **Angry King**: Bend your head downwards.
+* **Crying Goblin**: Bring both of your hands up close to your eyes.
+* **Kissing Princess**: Place your open palm fully over your mouth.
+* **Mog Emote**: Place your index finger near your chin or jawline.
+* **Thumbs Up King**: Make a clear thumbs-up gesture with a closed fist.
+
+## 8. How It Works: A Technical Overview
+
+The application's logic follows a continuous loop for each frame captured from the webcam:
+
+1.  **Frame Capture**: OpenCV captures a frame, flips it horizontally (for a mirror effect), and converts it to RGB.
+2.  **Dual Model Inference**: The RGB frame is passed to both the FaceMesh and Hands models simultaneously. MediaPipe processes the image and returns a detailed list of 3D landmarks for the detected face and hands.
+3.  **Gesture Recognition Engine**: This is the core logic where the landmark data is analyzed:
+    * **Head Tilt**: It calculates the vertical distance between the nose and chin landmarks. A significant increase means a head tilt up (laugh), while a decrease means a head bend down (angry).
+    * **Hand-to-Face Proximity**: It calculates the Euclidean distance between hand landmarks (like the center of the palm or the tip of the index finger) and face landmarks (like the eyes, mouth, or chin) to detect gestures like "cry," "kiss," and "mog."
+    * **Hand Pose Analysis**: For the "thumbs up," it checks the vertical position of the thumb's tip relative to the other finger knuckles to confirm the pose.
+4.  **State Management**: The detected gesture is not triggered immediately. It is stored as a candidate. Only after this candidate gesture has been detected for `GESTURE_CONFIRMATION_FRAMES` (e.g., 5 frames in a row) does it become the active gesture. This prevents momentary, unintentional movements from triggering emotes.
+5.  **UI Rendering**: OpenCV is used to draw everything back onto the screen: the original webcam feed, the detected landmarks, the live debug text, and the currently active emote GIF, which is updated frame-by-frame.
